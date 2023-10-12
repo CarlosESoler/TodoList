@@ -43,4 +43,9 @@ public class TaskController {
         System.out.println(tasks);
         return ResponseEntity.status(HttpStatus.OK).body(tasks);
     }
+
+    @GetMapping("/{idTask}")
+    public ResponseEntity getTaskById(@PathVariable UUID idTask, HttpServletRequest request) {
+        return ResponseEntity.status(HttpStatus.OK).body(taskRepository.findById(idTask));
+    }
 }
