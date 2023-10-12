@@ -20,12 +20,12 @@ public class Task {
     @Column(length = 50)
     private String title;
     private String description;
-    private LocalDate startedAt;
+    private LocalDateTime startedAt;
     private LocalDate endAt;
     private String priority;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    private UUID idUser;
+    private UUID IdUser;
 }
