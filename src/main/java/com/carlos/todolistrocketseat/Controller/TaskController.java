@@ -2,6 +2,7 @@ package com.carlos.todolistrocketseat.Controller;
 
 import com.carlos.todolistrocketseat.Model.Task;
 import com.carlos.todolistrocketseat.Repository.TaskRepository;
+import com.carlos.todolistrocketseat.Utils.UtilsProp;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -47,5 +49,17 @@ public class TaskController {
     @GetMapping("/{idTask}")
     public ResponseEntity getTaskById(@PathVariable UUID idTask, HttpServletRequest request) {
         return ResponseEntity.status(HttpStatus.OK).body(taskRepository.findById(idTask));
+    }
+
+    @PutMapping("/{idTask}")
+    public ResponseEntity updateTask(@RequestBody Task task, @PathVariable UUID idTask, HttpServletRequest request) {
+        Optional<Task> taskT = taskRepository.findById(idTask);
+        if(taskT.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarefa não encontrada");
+        }
+
+        UtilsProp.copyNonNullProperties(task, taskT.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body(taskRepository.save(taskT.get()));
     }
 }
