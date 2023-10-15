@@ -24,8 +24,9 @@ public class Filter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getServletPath();
+        String method = request.getMethod();
 
-        if(path.equals("/task") && request.getMethod().equals("POST")  || request.getMethod().equals("GET")) {
+        if(path.startsWith("/task") && method.equals("POST")  || method.equals("GET") || method.equals("PUT") || method.equals("DELETE")) {
             String authorization = request.getHeader("Authorization");
 
             String username = getUserCredentials(authorization)[0];
