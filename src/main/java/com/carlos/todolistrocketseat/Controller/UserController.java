@@ -1,7 +1,8 @@
 package com.carlos.todolistrocketseat.Controller;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.carlos.todolistrocketseat.Model.DTO.UserDTO;
+import com.carlos.todolistrocketseat.Exceptions.UserNotFoundException;
+import com.carlos.todolistrocketseat.DTO.UserDTO;
 import com.carlos.todolistrocketseat.Model.User;
 import com.carlos.todolistrocketseat.Repository.UserRepository;
 import org.springframework.beans.BeanUtils;
@@ -35,10 +36,10 @@ public class UserController {
     }
 
     @GetMapping("/{idUser}")
-    public ResponseEntity getUser(@PathVariable UUID idUser) {
+    public ResponseEntity getUser(@PathVariable UUID idUser) throws UserNotFoundException {
 
         User user = userRepository.findUserByIdUser(idUser).orElse(null);
-        if(user == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        if(user == null) throw  new UserNotFoundException("User not found");
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
