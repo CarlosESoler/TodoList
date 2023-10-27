@@ -1,4 +1,4 @@
-package com.carlos.todolistrocketseat.Model.DTO;
+package com.carlos.todolistrocketseat.DTO;
 
 import java.sql.Timestamp;
 import java.util.UUID;
