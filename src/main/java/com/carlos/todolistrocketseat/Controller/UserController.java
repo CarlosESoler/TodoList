@@ -1,7 +1,7 @@
 package com.carlos.todolistrocketseat.Controller;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.carlos.todolistrocketseat.Exceptions.UserNotFoundException;
+import com.carlos.todolistrocketseat.Exceptions.UserNotFound.UserNotFoundException;
 import com.carlos.todolistrocketseat.DTO.UserDTO;
 import com.carlos.todolistrocketseat.Model.User;
 import com.carlos.todolistrocketseat.Repository.UserRepository;

@@ -1,4 +1,4 @@
-package com.carlos.todolistrocketseat.Exceptions;
+package com.carlos.todolistrocketseat.Exceptions.UserNotFound;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;

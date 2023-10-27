@@ -1,6 +1,6 @@
 package com.carlos.todolistrocketseat.Repository;
 
-import com.carlos.todolistrocketseat.Exceptions.UserNotFoundException;
+import com.carlos.todolistrocketseat.Exceptions.UserNotFound.UserNotFoundException;
 import com.carlos.todolistrocketseat.Model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
