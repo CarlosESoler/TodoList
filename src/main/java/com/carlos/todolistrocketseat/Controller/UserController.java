@@ -39,7 +39,7 @@ public class UserController {
     public ResponseEntity getUser(@PathVariable UUID idUser) throws UserNotFoundException {
 
         User user = userRepository.findUserByIdUser(idUser).orElse(null);
-        if(user == null) throw  new UserNotFoundException("User not found");
+        if(user == null) throw new UserNotFoundException("User not found: ", idUser);
 
         return ResponseEntity.status(HttpStatus.OK).body(user);
     }
