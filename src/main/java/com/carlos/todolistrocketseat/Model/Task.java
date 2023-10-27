@@ -27,5 +27,6 @@ public class Task {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    // TODO - Make the relationship between User and Task
     private UUID idUser;
 }

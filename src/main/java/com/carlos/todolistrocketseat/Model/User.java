@@ -28,4 +28,6 @@ public class User {
     @CreationTimestamp
     private Timestamp createdAt;
 
+    // TODO - Make the relationship between User and Task
+
 }
