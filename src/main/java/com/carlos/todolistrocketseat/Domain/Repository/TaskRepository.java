@@ -1,6 +1,6 @@
-package com.carlos.todolistrocketseat.Repository;
+package com.carlos.todolistrocketseat.Domain.Repository;
 
-import com.carlos.todolistrocketseat.Model.Task;
+import com.carlos.todolistrocketseat.Data.Model.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

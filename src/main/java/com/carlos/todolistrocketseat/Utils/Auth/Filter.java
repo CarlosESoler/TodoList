@@ -1,8 +1,8 @@
-package com.carlos.todolistrocketseat.Auth;
+package com.carlos.todolistrocketseat.Utils.Auth;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.carlos.todolistrocketseat.Model.User;
-import com.carlos.todolistrocketseat.Repository.UserRepository;
+import com.carlos.todolistrocketseat.Data.Model.User;
+import com.carlos.todolistrocketseat.Domain.Repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -27,10 +27,8 @@ public class Filter extends OncePerRequestFilter {
 
         if(path.startsWith("/task")) {
             String authorization = request.getHeader("Authorization");
-
             String username = getUserCredentials(authorization)[0];
             String encryptedPassword = getUserCredentials(authorization)[1];
-
             Optional<User> user = userRepository.findUserByUserName(username);
 
             if (user.isEmpty() || !BCrypt.verifyer().verify(encryptedPassword.toCharArray(), user.get().getPassword()).verified) {

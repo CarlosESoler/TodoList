@@ -15,7 +15,7 @@ public class UserNotFoundExceptionHandler {
     @ExceptionHandler(UserNotFoundException.class)
     public Map<String,String> handleUserNotFoundException(UserNotFoundException e) {
         Map<String, String> errorMap = new HashMap<>();
-        errorMap.put("error code", HttpStatus.NOT_FOUND.toString().toLowerCase());
+        errorMap.put("errorCode", HttpStatus.NOT_FOUND.toString().toLowerCase());
         errorMap.put("message", e.getMessage());
         return errorMap;
     }

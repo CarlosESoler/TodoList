@@ -1,31 +1,31 @@
-package com.carlos.todolistrocketseat.Controller;
+package com.carlos.todolistrocketseat.Domain.Service;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
+import com.carlos.todolistrocketseat.Data.DTO.UserDTO;
+import com.carlos.todolistrocketseat.Data.Model.User;
+import com.carlos.todolistrocketseat.Domain.Repository.UserRepository;
 import com.carlos.todolistrocketseat.Exceptions.UserNotFound.UserNotFoundException;
-import com.carlos.todolistrocketseat.DTO.UserDTO;
-import com.carlos.todolistrocketseat.Model.User;
-import com.carlos.todolistrocketseat.Repository.UserRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.UUID;
 
-
-@RestController
-@RequestMapping("/user")
-public class UserController {
+@Service
+public class UserService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
-    @PostMapping
-    public ResponseEntity createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<User> createUser(@RequestBody UserDTO userDTO) {
 
+        // TODO - Refactor this to throw a custom exception
         if (userRepository.findUserByUserName(userDTO.userName()).isPresent()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
+            throw new IllegalArgumentException("User already exists");
         }
 
         User user = new User();
@@ -35,7 +35,6 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userRepository.save(user));
     }
 
-    @GetMapping("/{idUser}")
     public ResponseEntity getUser(@PathVariable UUID idUser) throws UserNotFoundException {
 
         User user = userRepository.findUserByIdUser(idUser).orElse(null);
@@ -47,5 +46,4 @@ public class UserController {
     private String hashingPassword(String password) {
         return BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
-
 }

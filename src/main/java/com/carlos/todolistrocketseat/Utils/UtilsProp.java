@@ -5,6 +5,7 @@ import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 import java.beans.PropertyDescriptor;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class UtilsProp {
@@ -18,7 +19,7 @@ public class UtilsProp {
 
         PropertyDescriptor[] propertyDescriptors = SOURCE.getPropertyDescriptors();
 
-        Set<String> emptyNames = new HashSet<String>();
+        Set<String> emptyNames = new HashSet<>();
         for (PropertyDescriptor propertyDescriptor : propertyDescriptors) {
             Object srcValue = SOURCE.getPropertyValue(propertyDescriptor.getName());
             if (srcValue == null) emptyNames.add(propertyDescriptor.getName());
