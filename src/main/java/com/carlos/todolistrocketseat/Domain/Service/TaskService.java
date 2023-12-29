@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class TaskService {
@@ -51,18 +49,25 @@ public class TaskService {
     }
 
     public ResponseEntity getTasks(HttpServletRequest request) {
+
+        // TODO - Refactor this to throw a custom exception
+        Map<String, String> error = new HashMap<>();
+        error.put("error", HttpStatus.NOT_FOUND.toString().toLowerCase());
+        error.put("message", "Nenhuma tarefa encontrada");
+
         List<Task> tasks = taskRepository
                 .findByIdUser((UUID) request.getAttribute("idUser"));
         if(tasks.isEmpty())
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body("Nenhuma tarefa encontrada");
+                    .body(error);
+
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(tasks);
     }
 
-    public ResponseEntity createTask(@RequestBody Task taskDTO, HttpServletRequest request) {
+    public ResponseEntity<?> createTask(@RequestBody Task taskDTO, HttpServletRequest request) {
         verifyDate(taskDTO);
 
         taskDTO.setIdUser((UUID) request.getAttribute("idUser"));
@@ -75,13 +80,10 @@ public class TaskService {
 
     private void verifyDate(Task task) throws InvalidDateException {
         LocalDate today = LocalDate.now();
-        LocalDate startedAt = task.getStartedAt();
-        LocalDate endAt = task.getEndAt();
-
-        if (startedAt.isBefore(today) || endAt.isBefore(today)) {
+        if (task.getStartedAt().isBefore(today) || task.getEndAt().isBefore(today)) {
             throw new InvalidDateException("A data de início e término não podem ser menores que a data atual");
         }
-        if (startedAt.isAfter(task.getEndAt())) {
+        if (task.getStartedAt().isAfter(task.getEndAt())) {
             throw new InvalidDateException("A data de início não pode ser maior que a data de término");
         }
     }
